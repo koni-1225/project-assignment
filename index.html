@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<meta name="google-signin-client_id" content="537794575048-u6hiueqblvtjkbertd8stdume657vbi6.apps.googleusercontent.com">
+		<script type="text/javascript">
+			
+			
+			function onSignIn(googleUser)
+			{
+			  //tempImageElement();
+			  var profile = googleUser.getBasicProfile();
+			  document.getElementById("uid").innerHTML=profile.getId();
+			  document.getElementById("uname").innerHTML=profile.getName();
+			  document.getElementById("uemail").innerHTML=profile.getEmail();
+			  //var url=profile.getImageUrl();//.replace("https:","http:");
+			  //alert(url);
+			  document.getElementById("myImg").src=profile.getImageUrl();
+			  document.getElementById("myImg").style.visibility="visible";
+			  
+			  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			  console.log('Name: ' + profile.getName());
+			  console.log('Image URL: ' + profile.getImageUrl());
+			  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+			}
+			
+			//to clear the div tag info
+			function clear()
+			{
+				//document.getElementById("myImg")
+				document.getElementById("myImg").style.visibility="hidden";
+				document.getElementById("uid").innerHTML="";
+				document.getElementById("uname").innerHTML="";
+				document.getElementById("uemail").innerHTML="";
+			}
+			
+			function signOut() {
+			var auth2 = gapi.auth2.getAuthInstance();
+			clear();
+			auth2.signOut().then(function () {
+			  console.log('User signed out.');
+			});
+			//auth2.disconnect();
+			}
+		
+		</script>
+	</head>
+	<body>
+		<div align="center">
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<a href="#" onclick="signOut();">Sign out</a>
+			<div id="info">
+				<p id="uid"></p>
+				<p id="uname"></p>
+				<img id="myImg" src="" alt="not found" width="107" height="98" style="visibility: hidden;"></img>
+				<p id="uemail"></p>
+			</div>
+		</div>	
+	</body>
+</html>
